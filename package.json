@@ -1,0 +1,14 @@
+{
+  "name": "webux-app",
+  "version": "1.0.0",
+  "description": "This is the webux core, all the definitions will be available here",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Studio Webux S.E.N.C",
+  "license": "SEE LICENSE IN license.txt",
+  "dependencies": {
+    "webux-logger": "^1.2.2"
+  }
+}
