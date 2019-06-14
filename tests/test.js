@@ -13,7 +13,7 @@ const options = {
   }
 };
 
-const { CreateApp, Webux } = require("./index");
+const { CreateApp, Webux } = require("../index");
 
 CreateApp(options);
 // CreateApp();
