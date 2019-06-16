@@ -14,8 +14,11 @@
 
 "use strict";
 
-const webuxlogger = require("webux-logger");
+const webuxLogger = require("webux-logger");
 const express = require("express");
+const webuxResponse = require("webux-response");
+
+webuxResponse(express);
 
 let Webux = () => {
   return this;
@@ -23,7 +26,7 @@ let Webux = () => {
 
 function CreateApp(options = {}) {
   if (options) {
-    Webux.log = webuxlogger(options.logger);
+    Webux.log = webuxLogger(options.logger);
     Webux.app = express();
   }
 
