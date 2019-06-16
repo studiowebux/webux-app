@@ -28,6 +28,7 @@ function CreateApp(options = {}) {
   if (options) {
     Webux.log = webuxLogger(options.logger);
     Webux.app = express();
+    Webux.res = express.response;
   }
 
   return Webux;
