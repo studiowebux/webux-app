@@ -17,6 +17,7 @@
 const webuxLogger = require("webux-logger");
 const express = require("express");
 const webuxResponse = require("webux-response");
+const webuxErrorHandler = require('webux-errorhandler');
 
 webuxResponse(express);
 
@@ -29,7 +30,7 @@ function CreateApp(options = {}) {
     Webux.log = webuxLogger(options.logger);
   }
   Webux.app = express();
-  Webux.res = express.response;
+  Webux.errorHandler = webuxErrorHandler.format;
 
   return Webux;
 }

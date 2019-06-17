@@ -21,3 +21,9 @@ CreateApp(options);
 Webux.log.info("This is a test with a global variable !");
 
 require("./test2")();
+
+Webux.app.get("/", (req, res) => {
+  return res.success();
+});
+
+Webux.app.listen(1337);
