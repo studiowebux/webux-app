@@ -20,6 +20,7 @@ const webuxResponse = require("webux-response");
 const webuxErrorHandler = require("webux-errorhandler");
 const webuxLoader = require("webux-loader");
 const webuxLanguage = require("webux-language");
+const webuxSecurity = require("webux-security");
 
 webuxResponse(express);
 
