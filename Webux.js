@@ -48,6 +48,7 @@ function StartServer() {
 }
 
 function LoadLanguage() {
+  this.i18n = webuxLanguage.i18n;
   return webuxLanguage.init(this.app, this.log, this.config.language);
 }
 
