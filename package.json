@@ -9,6 +9,7 @@
   "author": "Studio Webux S.E.N.C",
   "license": "SEE LICENSE IN license.txt",
   "dependencies": {
+    "express": "^4.17.1",
     "webux-errorhandler": "^1.0.0",
     "webux-logger": "^1.2.2",
     "webux-response": "^1.0.0"
