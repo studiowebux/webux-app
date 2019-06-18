@@ -18,11 +18,12 @@ const webuxLogger = require("webux-logger");
 const express = require("express");
 const webuxResponse = require("webux-response");
 const webuxErrorHandler = require("webux-errorhandler");
+const webuxLoader = require("webux-loader");
 
 webuxResponse(express);
 
-function AppendConfiguration(key, config = {}) {
-  this.config[key] = config;
+function LoadConfiguration(path) {
+  this.config = webuxLoader(path);
 }
 
 function CreateLogger(options = {}) {
@@ -35,9 +36,10 @@ function Webux() {
   this.log = webuxLogger();
   this.app = express();
   this.errorHandler = webuxErrorHandler.format;
+  this.config = webuxLoader;
 }
 
-Webux.prototype.AppendConfiguration = AppendConfiguration;
+Webux.prototype.LoadConfiguration = LoadConfiguration;
 Webux.prototype.CreateLogger = CreateLogger;
 
 module.exports = Webux;
