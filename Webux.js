@@ -19,6 +19,7 @@ const express = require("express");
 const webuxResponse = require("webux-response");
 const webuxErrorHandler = require("webux-errorhandler");
 const webuxLoader = require("webux-loader");
+const webuxLanguage = require("webux-language");
 
 webuxResponse(express);
 
@@ -26,12 +27,21 @@ function LoadConfiguration(path) {
   this.config = webuxLoader(path);
 }
 
-function CreateLogger(options) {
-  if (options) {
-    this.log = webuxLogger(options);
-  } else {
-    this.log = webuxLogger(this.config.logger);
-  }
+function LoadSecurity() {
+  return webuxSecurity(
+    this.app,
+    this.config.security,
+    this.log,
+    this.errorHandler
+  );
+}
+
+function LoadLanguage() {
+  return webuxLanguage(this.app, this.log, this.config.language);
+}
+
+function CreateLogger() {
+  this.log = webuxLogger(this.config.logger);
 }
 
 function Webux() {
@@ -44,6 +54,8 @@ function Webux() {
 }
 
 Webux.prototype.LoadConfiguration = LoadConfiguration;
+Webux.prototype.LoadSecurity = LoadSecurity;
+Webux.prototype.LoadLanguage = LoadLanguage;
 Webux.prototype.CreateLogger = CreateLogger;
 
 module.exports = Webux;
