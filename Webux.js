@@ -26,8 +26,12 @@ function LoadConfiguration(path) {
   this.config = webuxLoader(path);
 }
 
-function CreateLogger(options = {}) {
-  this.log = webuxLogger(options);
+function CreateLogger(options) {
+  if (options) {
+    this.log = webuxLogger(options);
+  } else {
+    this.log = webuxLogger(this.config.logger);
+  }
 }
 
 function Webux() {

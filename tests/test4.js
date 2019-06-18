@@ -1,7 +1,8 @@
-const Webux = require("../index")();
+const WebuxCore = require("../index");
+
+const Webux = new WebuxCore();
 
 Webux.CreateLogger();
-Webux.AppendConfiguration();
 
 Webux.app.get("/", (req, res) => {
   Webux.log.info("/ is accessible");
