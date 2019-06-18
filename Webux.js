@@ -21,6 +21,7 @@ const webuxErrorHandler = require("webux-errorhandler");
 const webuxLoader = require("webux-loader");
 const webuxLanguage = require("webux-language");
 const webuxSecurity = require("webux-security");
+const webuxServer = require("webux-server");
 
 webuxResponse(express);
 
@@ -34,6 +35,14 @@ function LoadSecurity() {
     this.config.security,
     this.log,
     this.errorHandler
+  );
+}
+
+function StartServer() {
+  return webuxServer(
+    this.app,
+    this.log,
+    this.config.server
   );
 }
 
@@ -58,5 +67,6 @@ Webux.prototype.LoadConfiguration = LoadConfiguration;
 Webux.prototype.LoadSecurity = LoadSecurity;
 Webux.prototype.LoadLanguage = LoadLanguage;
 Webux.prototype.CreateLogger = CreateLogger;
+Webux.prototype.StartServer = StartServer;
 
 module.exports = Webux;
