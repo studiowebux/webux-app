@@ -17,7 +17,11 @@
 const webuxLogger = require("webux-logger");
 const express = require("express");
 const webuxResponse = require("webux-response");
-const webuxErrorHandler = require('webux-errorhandler');
+const webuxErrorHandler = require("webux-errorhandler");
+
+function AppendConfiguration(key, config = {}) {
+  Webux.config[key] = config;
+}
 
 webuxResponse(express);
 
@@ -26,11 +30,16 @@ let Webux = () => {
 };
 
 function CreateApp(options = {}) {
+  // variables
   if (options) {
     Webux.log = webuxLogger(options.logger);
   }
+  Webux.config = {};
+
+  // functions
   Webux.app = express();
   Webux.errorHandler = webuxErrorHandler.format;
+  Webux.AppendConfiguration = AppendConfiguration;
 
   return Webux;
 }

@@ -18,9 +18,13 @@ const { CreateApp, Webux } = require("../index");
 CreateApp(options);
 // CreateApp();
 
+console.log(Webux.log)
+
 Webux.log.info("This is a test with a global variable !");
 
 require("./test2")();
+
+require('./test3');
 
 Webux.app.get("/", (req, res) => {
   return res.success();
