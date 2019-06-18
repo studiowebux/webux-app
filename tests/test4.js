@@ -1,6 +1,7 @@
 const Webux = require("../index")();
 
 Webux.CreateLogger();
+Webux.AppendConfiguration();
 
 Webux.app.get("/", (req, res) => {
   Webux.log.info("/ is accessible");

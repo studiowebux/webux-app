@@ -15,7 +15,7 @@
 "use strict";
 
 const webuxLogger = require("webux-logger");
-let express = require("express");
+const express = require("express");
 const webuxResponse = require("webux-response");
 const webuxErrorHandler = require("webux-errorhandler");
 
@@ -30,9 +30,9 @@ function CreateLogger(options = {}) {
 }
 
 function Webux() {
-  this.log = {};
   this.config = {};
 
+  this.log = webuxLogger();
   this.app = express();
   this.errorHandler = webuxErrorHandler.format;
 }
