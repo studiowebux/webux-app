@@ -22,6 +22,7 @@ const webuxLoader = require("webux-loader");
 const webuxLanguage = require("webux-language");
 const webuxSecurity = require("webux-security");
 const webuxServer = require("webux-server");
+const webuxSeed = require("webux-seed");
 
 webuxResponse(express);
 
@@ -50,6 +51,10 @@ function LoadLanguage() {
   return webuxLanguage.init(this.app, this.log, this.config.language);
 }
 
+function LoadSeed() {
+  return webuxSeed(this.log, this.config.seed.directory);
+}
+
 function CreateLogger() {
   this.log = webuxLogger(this.config.logger);
 }
@@ -67,6 +72,7 @@ Webux.prototype.LoadConfiguration = LoadConfiguration;
 Webux.prototype.LoadSecurity = LoadSecurity;
 Webux.prototype.LoadLanguage = LoadLanguage;
 Webux.prototype.CreateLogger = CreateLogger;
+Webux.prototype.LoadSeed = LoadSeed;
 Webux.prototype.StartServer = StartServer;
 
 module.exports = Webux;
