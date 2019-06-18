@@ -1,6 +1,6 @@
 {
   "name": "webux-app",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "This is the webux core, all the definitions will be available here",
   "main": "index.js",
   "scripts": {
