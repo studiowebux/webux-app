@@ -38,7 +38,7 @@ function LoadSecurity() {
 }
 
 function LoadLanguage() {
-  return webuxLanguage(this.app, this.log, this.config.language);
+  return webuxLanguage.init(this.app, this.log, this.config.language);
 }
 
 function CreateLogger() {
