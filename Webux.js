@@ -44,7 +44,7 @@ function StartServer() {
 }
 
 function LoadGlobalErrorHandler() {
-  return webuxErrorHandler(this.app, this.log);
+  return webuxErrorHandler.globalErrorHandler(this.app, this.log);
 }
 
 function LoadLanguage() {
