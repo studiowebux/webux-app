@@ -40,11 +40,11 @@ function LoadSecurity() {
 }
 
 function StartServer() {
-  return webuxServer(
-    this.app,
-    this.log,
-    this.config.server
-  );
+  return webuxServer(this.app, this.log, this.config.server);
+}
+
+function LoadGlobalErrorHandler() {
+  return webuxErrorHandler(this.app, this.log);
 }
 
 function LoadLanguage() {
@@ -65,7 +65,7 @@ function Webux() {
 
   this.log = webuxLogger();
   this.app = express();
-  this.errorHandler = webuxErrorHandler.format;
+  this.errorHandler = webuxErrorHandler.errorHandler;
   this.config = webuxLoader;
 }
 
@@ -75,5 +75,6 @@ Webux.prototype.LoadLanguage = LoadLanguage;
 Webux.prototype.CreateLogger = CreateLogger;
 Webux.prototype.LoadSeed = LoadSeed;
 Webux.prototype.StartServer = StartServer;
+Webux.prototype.GlobalErrorHandler = LoadGlobalErrorHandler;
 
 module.exports = Webux;
