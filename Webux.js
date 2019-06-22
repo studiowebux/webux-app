@@ -23,6 +23,7 @@ const webuxLanguage = require("webux-language");
 const webuxSecurity = require("webux-security");
 const webuxServer = require("webux-server");
 const webuxSeed = require("webux-seed");
+const webuxLogging = require("webux-logging");
 
 webuxResponse(express);
 
@@ -75,6 +76,8 @@ Webux.prototype.LoadLanguage = LoadLanguage;
 Webux.prototype.CreateLogger = CreateLogger;
 Webux.prototype.LoadSeed = LoadSeed;
 Webux.prototype.StartServer = StartServer;
+Webux.prototype.OnRequest = webuxLogging.onRequest;
+Webux.prototype.OnResponse = webuxLogging.onResponse;
 Webux.prototype.GlobalErrorHandler = LoadGlobalErrorHandler;
 
 module.exports = Webux;
