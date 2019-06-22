@@ -44,6 +44,14 @@ function StartServer() {
   return webuxServer(this.app, this.log, this.config.server);
 }
 
+function OnRequest() {
+  return webuxLogging.onRequest(this.app, this.log, this.config.request);
+}
+
+function OnResponse() {
+  return webuxLogging.onResponse(this.app, this.log);
+}
+
 function LoadGlobalErrorHandler() {
   return webuxErrorHandler.globalErrorHandler(this.app, this.log);
 }
@@ -76,8 +84,8 @@ Webux.prototype.LoadLanguage = LoadLanguage;
 Webux.prototype.CreateLogger = CreateLogger;
 Webux.prototype.LoadSeed = LoadSeed;
 Webux.prototype.StartServer = StartServer;
-Webux.prototype.OnRequest = webuxLogging.onRequest;
-Webux.prototype.OnResponse = webuxLogging.onResponse;
+Webux.prototype.OnRequest = OnRequest;
+Webux.prototype.OnResponse = OnResponse;
 Webux.prototype.GlobalErrorHandler = LoadGlobalErrorHandler;
 
 module.exports = Webux;
