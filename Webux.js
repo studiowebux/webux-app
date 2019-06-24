@@ -24,6 +24,7 @@ const webuxSecurity = require("webux-security");
 const webuxServer = require("webux-server");
 const webuxSeed = require("webux-seed");
 const webuxLogging = require("webux-logging");
+const webuxRoute = require("webux-route");
 
 webuxResponse(express);
 
@@ -52,6 +53,10 @@ function OnResponse() {
   return webuxLogging.onResponse(this.app, this.log);
 }
 
+function CreateRoutes() {
+  return webuxRoute.CreateRoutes(this.router, this.config.routes);
+}
+
 function LoadGlobalErrorHandler() {
   return webuxErrorHandler.globalErrorHandler(this.app, this.log);
 }
@@ -74,6 +79,7 @@ function Webux() {
 
   this.log = webuxLogger();
   this.app = express();
+  this.router = express.Router();
   this.errorHandler = webuxErrorHandler.errorHandler;
   this.config = webuxLoader;
 }
@@ -86,6 +92,7 @@ Webux.prototype.LoadSeed = LoadSeed;
 Webux.prototype.StartServer = StartServer;
 Webux.prototype.OnRequest = OnRequest;
 Webux.prototype.OnResponse = OnResponse;
+Webux.prototype.CreateRoutes = CreateRoutes;
 Webux.prototype.GlobalErrorHandler = LoadGlobalErrorHandler;
 
 module.exports = Webux;
