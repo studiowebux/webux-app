@@ -33,28 +33,23 @@ function LoadConfiguration(path) {
 }
 
 function LoadSecurity() {
-  return webuxSecurity(
-    this.app,
-    this.config.security,
-    this.log,
-    this.errorHandler
-  );
+  return webuxSecurity(this.config.security, this.app, this.log);
 }
 
 function StartServer() {
-  return webuxServer(this.app, this.log, this.config.server);
+  return webuxServer(this.config.server, this.app, this.log);
 }
 
 function OnRequest() {
-  return webuxLogging.onRequest(this.app, this.log, this.config.request);
+  return webuxLogging.onRequest(this.config.request, this.app, this.log);
 }
 
 function OnResponse() {
-  return webuxLogging.onResponse(this.app, this.log);
+  return webuxLogging.onResponse(this.config.response, this.app, this.log);
 }
 
 function CreateRoutes() {
-  return webuxRoute.CreateRoutes(this.router, this.config.routes);
+  return webuxRoute.CreateRoutes(this.routes, this.config.router);
 }
 
 function LoadGlobalErrorHandler() {
@@ -63,11 +58,11 @@ function LoadGlobalErrorHandler() {
 
 function LoadLanguage() {
   this.i18n = webuxLanguage.i18n;
-  return webuxLanguage.init(this.app, this.log, this.config.language);
+  return webuxLanguage.init(this.config.language, this.app, this.log);
 }
 
 function LoadSeed() {
-  return webuxSeed(this.log, this.config.seed.directory);
+  return webuxSeed(this.config.seed.directory, this.log);
 }
 
 function CreateLogger() {

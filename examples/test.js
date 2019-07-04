@@ -13,18 +13,13 @@ const options = {
   }
 };
 
-const { CreateApp, Webux } = require("../index");
+const WebuxCore = require("../index");
 
-CreateApp(options);
-// CreateApp();
+const Webux = new WebuxCore();
 
-console.log(Webux.log)
+console.log(Webux.log);
 
 Webux.log.info("This is a test with a global variable !");
-
-require("./test2")();
-
-require('./test3');
 
 Webux.app.get("/", (req, res) => {
   return res.success();

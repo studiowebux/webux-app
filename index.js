@@ -16,6 +16,10 @@
 
 const Webux = require("./Webux");
 
+/**
+ * this function initialise the whole framework
+ * @return {Object} return the Webux object
+ */
 function CreateApp() {
   return new Webux();
 }
