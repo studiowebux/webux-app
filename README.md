@@ -67,15 +67,12 @@ index.js
 ```
 const Webux = require("./Webux");
 
-/**
- * this function initialise the whole framework
- * @return {Object} return the Webux object
- */
-function CreateApp() {
-  return new Webux();
+try {
+  Webux();
+} catch (e) {
+  process.exit(1);
 }
 
-module.exports = CreateApp;
 ```
 
 for further details, i'm currently writing the whole document for the framework...
