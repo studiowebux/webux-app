@@ -1,13 +1,23 @@
 // helper
-const timeout = ms => new Promise(res => setTimeout(res, ms));
+const Webux = require("../../../index");
 
 // action
 const findUser = () => {
   return new Promise(async (resolve, reject) => {
-    console.log("Start the search of the entry");
-    console.log("then wait 2 seconds");
-    await timeout(2000);
-    return resolve({ msg: "Success !" });
+    try {
+      const users = await Webux.db.User.find().catch(e => {
+        return reject(Webux.errorHandler(422, e));
+      });
+      if (!users || users.length === 0) {
+        return reject(Webux.errorHandler(404, "users not found"));
+      }
+      return resolve({
+        msg: "Success !",
+        users: users
+      });
+    } catch (e) {
+      throw e;
+    }
   });
 };
 
@@ -16,7 +26,7 @@ const route = async (req, res, next) => {
   try {
     const obj = await findUser();
     if (!obj) {
-      return next(new Error("User not found."));
+      return next(Webux.errorHandler(404, "User not found."));
     }
     return res.status(200).json(obj);
   } catch (e) {
@@ -33,16 +43,14 @@ const socket = client => {
         client.emit("unauthorized", { message: "Unauthorized" });
         return;
       }
-      const obj = await findUser().catch(e => {
-        client.emit("error", e);
-      });
+      const obj = await findUser();
       if (!obj) {
-        client.emit("error", "User not found");
+        client.emit("gotError", "User not found");
       }
 
       client.emit("userFound", obj);
     } catch (e) {
-      client.emit("error", e);
+      client.emit("gotError", e);
     }
   };
 };

@@ -21,7 +21,7 @@ const webuxErrorHandler = require("webux-errorhandler");
 const webuxLoader = require("webux-loader");
 const webuxLanguage = require("webux-language");
 const webuxSecurity = require("webux-security");
-const { CreateServer, server } = require("webux-server");
+const { CreateServer } = require("webux-server");
 const webuxSeed = require("webux-seed");
 const webuxLogging = require("webux-logging");
 const webuxRoute = require("webux-route");
@@ -30,6 +30,7 @@ const webuxLimiter = require("webux-limiter");
 const webuxQuery = require("webux-query");
 const webuxMailer = require("webux-mailer");
 const webuxMongoDB = require("webux-mongo-db");
+const webuxValidator = require("webux-validator");
 
 webuxResponse(express);
 
@@ -136,6 +137,7 @@ function Webux() {
   this.errorHandler = webuxErrorHandler.errorHandler;
   this.config = webuxLoader;
   this.query = webuxQuery;
+  this.isValid = webuxValidator;
 }
 
 Webux.prototype.LoadConfiguration = LoadConfiguration;

@@ -1,26 +1,29 @@
 // helper
-const User = require("../../models/user");
+const Webux = require("../../../index");
+const { Create } = require("../../validations/user");
 
 // action
-const createUser = body => {
+const createUser = user => {
   return new Promise(async (resolve, reject) => {
-    if (!body) {
-      return reject(new Error("Body is not present !"));
-    }
     try {
-      const userCreated = await User.create(body.user);
+      await Webux.isValid
+        .Custom(Create)(user)
+        .catch(e => {
+          return reject(e); // returned a pre-formatted error
+        });
+
+      const userCreated = await Webux.db.User.create(user).catch(e => {
+        return reject(Webux.errorHandler(422, e));
+      });
       if (!userCreated) {
-        return reject(new Error("user not created"));
+        return reject(Webux.errorHandler(422, "user not created"));
       }
       return resolve({
         msg: "Success !",
-        user: {
-          user: body.user
-        }
+        user: userCreated
       });
     } catch (e) {
-      console.error(e);
-      return reject(e);
+      throw e;
     }
   });
 };
@@ -28,9 +31,9 @@ const createUser = body => {
 // route
 const route = async (req, res, next) => {
   try {
-    const obj = await createUser(req.body);
+    const obj = await createUser(req.body.user);
     if (!obj) {
-      return next(new Error("User not create."));
+      return next(Webux.errorHandler(422, "User not created"));
     }
     return res.status(201).json(obj);
   } catch (e) {
@@ -41,23 +44,20 @@ const route = async (req, res, next) => {
 // socket with auth
 
 const socket = client => {
-  return async body => {
-    console.log("called !");
+  return async user => {
     try {
       if (!client.auth) {
         client.emit("unauthorized", { message: "Unauthorized" });
         return;
       }
-      const obj = await createUser(body).catch(e => {
-        client.emit("error", e);
-      });
+      const obj = await createUser(user);
       if (!obj) {
-        client.emit("error", "User not create");
+        client.emit("gotError", "User not created");
       }
 
       client.emit("userCreated", obj);
     } catch (e) {
-      client.emit("error", e);
+      client.emit("gotError", e);
     }
   };
 };

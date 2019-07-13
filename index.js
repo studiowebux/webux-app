@@ -14,14 +14,6 @@
 
 "use strict";
 
-const Webux = require("./Webux");
+const WebuxCore = require("./app");
 
-/**
- * this function initialise the whole framework
- * @return {Object} return the Webux object
- */
-function CreateApp() {
-  return new Webux();
-}
-
-module.exports = CreateApp;
+module.exports = new WebuxCore();

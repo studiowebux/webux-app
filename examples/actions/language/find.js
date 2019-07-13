@@ -1,25 +1,19 @@
 // helper
 const Webux = require("../../../index");
-const { MongoID } = require("../../validations/user");
 
 // action
-const findOneUser = userID => {
+const findLanguage = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      await Webux.isValid
-        .Custom(MongoID)(userID)
-        .catch(e => {
-          return reject(e); // returned a pre-formatted error
-        });
-      const user = await Webux.db.User.findById(userID).catch(e => {
+      const languages = await Webux.db.Language.find().catch(e => {
         return reject(Webux.errorHandler(422, e));
       });
-      if (!user) {
-        return reject(Webux.errorHandler(404, "user not found"));
+      if (!languages || languages.length === 0) {
+        return reject(Webux.errorHandler(404, "languages not found"));
       }
       return resolve({
         msg: "Success !",
-        user: user
+        languages: languages
       });
     } catch (e) {
       throw e;
@@ -30,9 +24,9 @@ const findOneUser = userID => {
 // route
 const route = async (req, res, next) => {
   try {
-    const obj = await findOneUser(req.params.id);
+    const obj = await findLanguage();
     if (!obj) {
-      return next(Webux.errorHandler(404, "User with ID not found."));
+      return next(Webux.errorHandler(404, "Language not found."));
     }
     return res.status(200).json(obj);
   } catch (e) {
@@ -43,18 +37,18 @@ const route = async (req, res, next) => {
 // socket with auth
 
 const socket = client => {
-  return async userID => {
+  return async () => {
     try {
       if (!client.auth) {
         client.emit("unauthorized", { message: "Unauthorized" });
         return;
       }
-      const obj = await findOneUser(userID);
+      const obj = await findLanguage();
       if (!obj) {
-        client.emit("gotError", "User with ID not found");
+        client.emit("gotError", "Language not found");
       }
 
-      client.emit("userFound", obj);
+      client.emit("languageFound", obj);
     } catch (e) {
       client.emit("gotError", e);
     }
@@ -62,7 +56,7 @@ const socket = client => {
 };
 
 module.exports = {
-  findOneUser,
+  findLanguage,
   socket,
   route
 };

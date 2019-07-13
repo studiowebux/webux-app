@@ -16,11 +16,17 @@
 
 const Joi = require("joi");
 
-const Create = Joi.object().keys({
-  user: {
+const Create = Joi.object()
+  .keys({
     fullname: Joi.string().required()
-  }
-}).required();
+  })
+  .required();
+
+const Update = Joi.object()
+  .keys({
+    fullname: Joi.string().required()
+  })
+  .required();
 
 const MongoID = Joi.string()
   .regex(/^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)/i)
@@ -28,5 +34,6 @@ const MongoID = Joi.string()
 
 module.exports = {
   Create,
+  Update,
   MongoID
 };

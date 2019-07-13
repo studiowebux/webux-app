@@ -1,6 +1,4 @@
-const Validator = require("webux-validator");
 const Query = require("webux-query");
-const user = require("../validations/user");
 const _user = require("../constants/user");
 
 module.exports = {
@@ -14,7 +12,7 @@ module.exports = {
         },
         {
           method: "post",
-          middlewares: [Validator.Body(user.Create)],
+          middlewares: [],
           action: require(__dirname + "/../actions/user/create").route
         }
       ],
@@ -46,6 +44,17 @@ module.exports = {
           action: (req, res, next) => {
             return res.success(this.config);
           }
+        }
+      ]
+    }
+  },
+  "/language":{
+    resources:{
+      "/":[
+        {
+          method: "get",
+          middlewares: [],
+          action: require(__dirname + "/../actions/language/find").route
         }
       ]
     }

@@ -14,12 +14,9 @@
 
 "use strict";
 
-const Webux = require("../index");
-
-console.log(Webux.db.Language);
+const Webux = require("../../index");
 
 const french = async () => {
-  // console.dir(Language);
   const language = new Webux.db.Language({
     language: "Français"
   });
@@ -32,16 +29,17 @@ const french = async () => {
   return Promise.resolve('Default language "french" created.');
 };
 
-// const english = async () => {
-//   await Language.create({
-//     language: "English"
-//   });
+const english = async () => {
+  const language = new Webux.db.Language({
+    language: "English"
+  });
+  const languageCreated = await language.save();
 
-//   if (!languageCreated) {
-//     throw new Error("Language not created !");
-//   }
+  if (!languageCreated) {
+    throw new Error("Language not created !");
+  }
 
-//   return Promise.resolve('Default language "english" created.');
-// };
+  return Promise.resolve('Default language "english" created.');
+};
 
-module.exports = Promise.all([french()]);
+module.exports = Promise.all([french(), english()]);

@@ -1,13 +1,31 @@
 // helper
-const timeout = ms => new Promise(res => setTimeout(res, ms));
+const Webux = require("../../../index");
+const { MongoID } = require("../../validations/user");
 
 // action
 const removeOneUser = userID => {
   return new Promise(async (resolve, reject) => {
-    console.log("Start the search of the entry");
-    console.log("then wait 2 seconds");
-    await timeout(2000);
-    return resolve({ msg: "Success !" });
+    try {
+      await Webux.isValid
+        .Custom(MongoID)(userID)
+        .catch(e => {
+          return reject(e); // returned a pre-formatted error
+        });
+      const userRemoved = await Webux.db.User.findByIdAndRemove(userID).catch(
+        e => {
+          return reject(Webux.errorHandler(422, e));
+        }
+      );
+      if (!userRemoved) {
+        return reject(Webux.errorHandler(422, "user not removed"));
+      }
+      return resolve({
+        msg: "Success !",
+        user: userRemoved
+      });
+    } catch (e) {
+      throw e;
+    }
   });
 };
 
@@ -16,7 +34,7 @@ const route = async (req, res, next) => {
   try {
     const obj = await removeOneUser(req.params.id);
     if (!obj) {
-      return next(new Error("User with ID not deleted."));
+      return next(Webux.errorHandler(422, "User with ID not deleted."));
     }
     return res.status(204).json(obj);
   } catch (e) {
@@ -33,16 +51,14 @@ const socket = client => {
         client.emit("unauthorized", { message: "Unauthorized" });
         return;
       }
-      const obj = await removeOneUser(userID).catch(e => {
-        client.emit("error", e);
-      });
+      const obj = await removeOneUser(userID);
       if (!obj) {
-        client.emit("error", "User with ID not deleted");
+        client.emit("gotError", "User with ID not deleted");
       }
 
-      client.emit("userDeleted", obj);
+      client.emit("userRemoved", obj);
     } catch (e) {
-      client.emit("error", e);
+      client.emit("gotError", e);
     }
   };
 };

@@ -1,6 +1,7 @@
 const path = require("path");
+const Webux = require("../index"); // this module the app
 
-async function LoadApp(Webux) {
+async function LoadApp() {
   // Load configuration
   await Webux.LoadConfiguration(path.join(__dirname, "config"));
 
@@ -42,6 +43,8 @@ async function LoadApp(Webux) {
 
   // start sockets
   await Webux.StartSocket();
+
+  return Webux;
 }
 
-module.exports = { LoadApp };
+module.exports = LoadApp;
