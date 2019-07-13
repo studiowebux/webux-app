@@ -1,3 +1,4 @@
+const path = require("path");
 module.exports = {
-  directory: "./defaults"
+  directory: path.join(__dirname, "..", "defaults")
 };

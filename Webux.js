@@ -29,6 +29,7 @@ const webuxSocket = require("webux-socket");
 const webuxLimiter = require("webux-limiter");
 const webuxQuery = require("webux-query");
 const webuxMailer = require("webux-mailer");
+const webuxMongoDB = require("webux-mongo-db");
 
 webuxResponse(express);
 
@@ -42,6 +43,16 @@ function LoadSecurity() {
 
 function StartServer() {
   this.server = CreateServer(this.config.server, this.app, this.log);
+}
+
+async function InitDB() {
+  this.db = new webuxMongoDB(this.config.db, this.log);
+  await this.db.InitDB();
+}
+
+async function LoadModels() {
+  await this.db.LoadModels();
+  this.db = Object.freeze(this.db);
 }
 
 function CreateLimiter() {
@@ -91,7 +102,7 @@ function StartSocket() {
 }
 
 async function CreateRoutes() {
-  await webuxRoute.CreateRoutes(this.config.routes, this.router);
+  await webuxRoute.CreateRoutes(this.config.routes, this.router, this.log);
   this.app.use(this.config.server.endpoint, this.router);
   return;
 }
@@ -117,6 +128,7 @@ function Webux() {
   this.config = {};
   this.socket = null;
   this.server = null;
+  this.db = null;
 
   this.log = webuxLogger();
   this.app = express();
@@ -141,5 +153,7 @@ Webux.prototype.GlobalErrorHandler = LoadGlobalErrorHandler;
 Webux.prototype.CreateLimiter = CreateLimiter;
 Webux.prototype.ConfigureWebuxMailer = ConfigureWebuxMailer;
 Webux.prototype.SendMail = SendMail;
+Webux.prototype.InitDB = InitDB;
+Webux.prototype.LoadModels = LoadModels;
 
 module.exports = Webux;

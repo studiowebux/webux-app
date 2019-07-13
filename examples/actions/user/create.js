@@ -1,5 +1,5 @@
 // helper
-const timeout = ms => new Promise(res => setTimeout(res, ms));
+const User = require("../../models/user");
 
 // action
 const createUser = body => {
@@ -7,10 +7,21 @@ const createUser = body => {
     if (!body) {
       return reject(new Error("Body is not present !"));
     }
-    console.log("Start the creation of the entry");
-    console.log("then wait 2 seconds");
-    await timeout(2000);
-    return resolve({ msg: "Success !" });
+    try {
+      const userCreated = await User.create(body.user);
+      if (!userCreated) {
+        return reject(new Error("user not created"));
+      }
+      return resolve({
+        msg: "Success !",
+        user: {
+          user: body.user
+        }
+      });
+    } catch (e) {
+      console.error(e);
+      return reject(e);
+    }
   });
 };
 
@@ -23,6 +34,7 @@ const route = async (req, res, next) => {
     }
     return res.status(201).json(obj);
   } catch (e) {
+    console.error(e);
     next(e);
   }
 };

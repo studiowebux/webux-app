@@ -1,15 +1,17 @@
-const WebuxCore = require("../index");
 const path = require("path");
 
-async function LoadApp() {
-  // Create app
-  const Webux = await new WebuxCore();
-
+async function LoadApp(Webux) {
   // Load configuration
   await Webux.LoadConfiguration(path.join(__dirname, "config"));
 
   // Create logger
   await Webux.CreateLogger();
+
+  // initialize the Database
+  await Webux.InitDB();
+
+  // initialize the Database Models
+  await Webux.LoadModels();
 
   // load default values
   await Webux.LoadSeed();
@@ -42,4 +44,4 @@ async function LoadApp() {
   await Webux.StartSocket();
 }
 
-module.exports = LoadApp;
+module.exports = { LoadApp };

@@ -1,7 +1,12 @@
-const Webux = require("./test3");
+const { LoadApp } = require("./test3");
+const WebuxCore = require("../index");
 
 try {
-  Webux();
+  // Create app
+  const Webux = new WebuxCore();
+  LoadApp(Webux);
+
+  module.exports = Webux;
 } catch (e) {
   process.exit(1);
 }

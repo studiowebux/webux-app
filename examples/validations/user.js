@@ -18,7 +18,7 @@ const Joi = require("joi");
 
 const Create = Joi.object().keys({
   user: {
-    name: Joi.string().required()
+    fullname: Joi.string().required()
   }
 }).required();
 
