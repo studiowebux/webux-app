@@ -23,7 +23,7 @@
     "webux-logging": "^1.1.1",
     "webux-mailer": "^1.0.2",
     "webux-mongo-db": "^1.2.0",
-    "webux-query": "^1.2.0",
+    "webux-query": "^1.2.1",
     "webux-response": "^1.1.0",
     "webux-route": "^1.1.2",
     "webux-security": "^1.4.0",
