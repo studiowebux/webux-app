@@ -133,6 +133,7 @@ function Webux() {
 
   this.log = webuxLogger();
   this.app = express();
+  this.express = express;
   this.router = express.Router();
   this.errorHandler = webuxErrorHandler.errorHandler;
   this.config = webuxLoader;
