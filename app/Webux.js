@@ -14,6 +14,9 @@
 
 "use strict";
 
+const fs = require("fs");
+const path = require("path");
+
 const webuxLogger = require("webux-logger");
 const express = require("express");
 const webuxResponse = require("webux-response");
@@ -68,6 +71,42 @@ function CreateLimiter() {
     } catch (e) {
       console.error(e);
       return reject("unable to create limiters");
+    }
+  });
+}
+
+function LoadConstants(directory) {
+  return new Promise((resolve, reject) => {
+    try {
+      fs.readdirSync(directory).forEach(file => {
+        if (file.indexOf(".js") > 0) {
+          // link the configuration values with the filename.
+          const configName = file.split(".js")[0];
+          this.constants[configName] = require(path.join(directory, file));
+          this.log.info("attached `constant` " + configName);
+        }
+      });
+      return resolve();
+    } catch (e) {
+      throw e;
+    }
+  });
+}
+
+function LoadValidators(directory) {
+  return new Promise((resolve, reject) => {
+    try {
+      fs.readdirSync(directory).forEach(file => {
+        if (file.indexOf(".js") > 0) {
+          // link the configuration values with the filename.
+          const configName = file.split(".js")[0];
+          this.validators[configName] = require(path.join(directory, file));
+          this.log.info("attached `validator` " + configName);
+        }
+      });
+      return resolve();
+    } catch (e) {
+      throw e;
     }
   });
 }
@@ -130,6 +169,8 @@ function Webux() {
   this.socket = null;
   this.server = null;
   this.db = null;
+  this.validators = {};
+  this.constants = {};
 
   this.log = webuxLogger();
   this.app = express();
@@ -158,5 +199,7 @@ Webux.prototype.ConfigureWebuxMailer = ConfigureWebuxMailer;
 Webux.prototype.SendMail = SendMail;
 Webux.prototype.InitDB = InitDB;
 Webux.prototype.LoadModels = LoadModels;
+Webux.prototype.LoadConstants = LoadConstants;
+Webux.prototype.LoadValidators = LoadValidators;
 
 module.exports = Webux;

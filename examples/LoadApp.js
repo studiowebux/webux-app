@@ -8,6 +8,10 @@ async function LoadApp() {
   // Create logger
   await Webux.CreateLogger();
 
+  await Webux.LoadConstants(path.join(__dirname, "constants"));
+
+  await Webux.LoadValidators(path.join(__dirname, "validations"));
+
   // initialize the Database
   await Webux.InitDB();
 
