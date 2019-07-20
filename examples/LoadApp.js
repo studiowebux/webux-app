@@ -2,15 +2,17 @@ const path = require("path");
 const Webux = require("../index"); // this module the app
 
 async function LoadApp() {
+  // Load constants
+  await Webux.LoadConstants(path.join(__dirname, "constants"));
+
+  // Load validators
+  await Webux.LoadValidators(path.join(__dirname, "validations"));
+
   // Load configuration
   await Webux.LoadConfiguration(path.join(__dirname, "config"));
 
   // Create logger
   await Webux.CreateLogger();
-
-  await Webux.LoadConstants(path.join(__dirname, "constants"));
-
-  await Webux.LoadValidators(path.join(__dirname, "validations"));
 
   // initialize the Database
   await Webux.InitDB();
