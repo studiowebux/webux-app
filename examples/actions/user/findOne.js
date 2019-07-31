@@ -17,6 +17,8 @@ const findOneUser = userID => {
       if (!user) {
         return reject(Webux.errorHandler(404, "user not found"));
       }
+
+
       return resolve({
         msg: "Success !",
         user: user

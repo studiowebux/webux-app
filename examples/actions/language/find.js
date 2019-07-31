@@ -5,12 +5,19 @@ const Webux = require("../../../index");
 const findLanguage = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      const languages = await Webux.db.Language.find().catch(e => {
-        return reject(Webux.errorHandler(422, e));
-      });
+      const languages = await Webux.db.Language.find()
+        .lean()
+        .catch(e => {
+          return reject(Webux.errorHandler(422, e));
+        });
       if (!languages || languages.length === 0) {
         return reject(Webux.errorHandler(404, "languages not found"));
       }
+
+      languages.map(language => {
+        language._id = Webux.idToUrl(language._id, "language");
+      });
+
       return resolve({
         msg: "Success !",
         languages: languages

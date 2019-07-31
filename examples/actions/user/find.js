@@ -11,6 +11,8 @@ const findUser = () => {
       if (!users || users.length === 0) {
         return reject(Webux.errorHandler(404, "users not found"));
       }
+
+
       return resolve({
         msg: "Success !",
         users: users

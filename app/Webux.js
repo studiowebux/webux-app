@@ -42,6 +42,7 @@ const {
   express
 } = require("../lib");
 const toObject = require("../lib/toObject");
+const idToUrl = require("../lib/idToUrl");
 
 function Webux() {
   this.config = {};
@@ -60,6 +61,7 @@ function Webux() {
   this.query = webuxQuery;
   this.isValid = webuxValidator;
   this.toObject = toObject;
+  this.idToUrl = idToUrl;
 }
 
 Webux.prototype.LoadConfiguration = LoadConfiguration;
