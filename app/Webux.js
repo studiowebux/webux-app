@@ -62,6 +62,7 @@ function Webux() {
   this.isValid = webuxValidator;
   this.toObject = toObject;
   this.idToUrl = idToUrl;
+  this.$ = {}; // This object will hold custom variables, provided by the user.
 }
 
 Webux.prototype.LoadConfiguration = LoadConfiguration;
