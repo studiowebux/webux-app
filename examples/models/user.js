@@ -17,7 +17,8 @@
 module.exports = db => {
   const userSchema = db.Schema(
     {
-      fullname: { type: String, required: true }
+      fullname: { type: String, required: true },
+      profilePicture: { type: String }
     },
     { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
   );

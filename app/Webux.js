@@ -19,6 +19,7 @@ const webuxQuery = require("webux-query");
 const webuxLogger = require("webux-logger");
 const webuxErrorHandler = require("webux-errorhandler");
 const webuxLoader = require("webux-loader");
+const webuxFileUpload = require("webux-fileupload");
 const {
   LoadConfiguration,
   LoadConstants,
@@ -28,6 +29,7 @@ const {
   LoadSecurity,
   LoadSeed,
   LoadValidators,
+  LoadStaticResources,
   CreateLogger,
   CreateLimiter,
   CreateRoutes,
@@ -62,6 +64,7 @@ function Webux() {
   this.isValid = webuxValidator;
   this.toObject = toObject;
   this.idToUrl = idToUrl;
+  this.fileUpload = webuxFileUpload;
   this.$ = {}; // This object will hold custom variables, provided by the user.
 }
 
@@ -84,5 +87,6 @@ Webux.prototype.InitDB = InitDB;
 Webux.prototype.LoadModels = LoadModels;
 Webux.prototype.LoadConstants = LoadConstants;
 Webux.prototype.LoadValidators = LoadValidators;
+Webux.prototype.LoadStaticResources = LoadStaticResources;
 
 module.exports = Webux;

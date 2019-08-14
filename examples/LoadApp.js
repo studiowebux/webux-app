@@ -50,6 +50,8 @@ async function LoadApp() {
   // Create Limiter
   await Webux.CreateLimiter();
 
+  // Load static resources
+  await Webux.LoadStaticResources();
   // routes
   await Webux.CreateRoutes();
 

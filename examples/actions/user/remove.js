@@ -1,16 +1,16 @@
 // helper
 const Webux = require("../../../index");
-const { MongoID } = require("../../validations/user");
 
 // action
 const removeOneUser = userID => {
   return new Promise(async (resolve, reject) => {
     try {
       await Webux.isValid
-        .Custom(MongoID)(userID)
+        .Custom(Webux.validators.user.MongoID, userID)
         .catch(e => {
-          return reject(e); // returned a pre-formatted error
+          return reject(e);
         });
+
       const userRemoved = await Webux.db.User.findByIdAndRemove(userID).catch(
         e => {
           return reject(Webux.errorHandler(422, e));

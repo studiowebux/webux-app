@@ -1,20 +1,20 @@
 // helper
 const Webux = require("../../../index");
-const { MongoID, Update } = require("../../validations/user");
 
 // action
 const updateOneUser = (userID, user) => {
   return new Promise(async (resolve, reject) => {
     try {
       await Webux.isValid
-        .Custom(MongoID)(userID)
+        .Custom(Webux.validators.user.MongoID, userID)
         .catch(e => {
-          return reject(e); // returned a pre-formatted error
+          return reject(e);
         });
+
       await Webux.isValid
-        .Custom(Update)(user)
+        .Custom(Webux.validators.user.Update, user)
         .catch(e => {
-          return reject(e); // returned a pre-formatted error
+          return reject(e);
         });
 
       const userUpdated = await Webux.db.User.findByIdAndUpdate(userID, user, {

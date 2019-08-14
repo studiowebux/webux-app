@@ -18,13 +18,6 @@ const findLanguage = () => {
         language._id = Webux.idToUrl(language._id, "language");
       });
 
-      // Test usage for the custom functions and variables.
-      Webux.showConfiguration();
-      console.log(Webux.$);
-      Webux.$.customVariableA = "new new new !";
-      Webux.showVariableB();
-      console.log(Webux.$);
-
       return resolve({
         msg: "Success !",
         languages: languages

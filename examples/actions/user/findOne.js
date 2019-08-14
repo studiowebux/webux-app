@@ -1,15 +1,14 @@
 // helper
 const Webux = require("../../../index");
-const { MongoID } = require("../../validations/user");
 
 // action
 const findOneUser = userID => {
   return new Promise(async (resolve, reject) => {
     try {
       await Webux.isValid
-        .Custom(MongoID)(userID)
+        .Custom(Webux.validators.user.MongoID, userID)
         .catch(e => {
-          return reject(e); // returned a pre-formatted error
+          return reject(e);
         });
       const user = await Webux.db.User.findById(userID).catch(e => {
         return reject(Webux.errorHandler(422, e));
@@ -17,7 +16,6 @@ const findOneUser = userID => {
       if (!user) {
         return reject(Webux.errorHandler(404, "user not found"));
       }
-
 
       return resolve({
         msg: "Success !",

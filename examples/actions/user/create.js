@@ -1,15 +1,14 @@
 // helper
 const Webux = require("../../../index");
-const { Create } = require("../../validations/user");
 
 // action
 const createUser = user => {
   return new Promise(async (resolve, reject) => {
     try {
       await Webux.isValid
-        .Custom(Create)(user)
+        .Custom(Webux.validators.user.Create, user)
         .catch(e => {
-          return reject(e); // returned a pre-formatted error
+          return reject(e);
         });
 
       const userCreated = await Webux.db.User.create(user).catch(e => {
@@ -31,7 +30,7 @@ const createUser = user => {
 // route
 const route = async (req, res, next) => {
   try {
-    const obj = await createUser(req.body.user);
+    const obj = await createUser(req.body.user || {});
     if (!obj) {
       return next(Webux.errorHandler(422, "User not created"));
     }

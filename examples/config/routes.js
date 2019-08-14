@@ -1,5 +1,6 @@
 const Query = require("webux-query");
 const _user = require("../constants/user");
+const Webux = require("../../index");
 
 module.exports = {
   "/user": {
@@ -14,6 +15,20 @@ module.exports = {
           method: "post",
           middlewares: [],
           action: require(__dirname + "/../actions/user/create").route
+        }
+      ],
+      "/:id/picture": [
+        {
+          method: "get",
+          middlewares: [],
+          action: require(__dirname + "/../actions/user/download").route
+        },
+        {
+          method: "post",
+          middlewares: [
+            Webux.fileUpload.fileUploadMiddleware(Webux.config.upload)
+          ],
+          action: require(__dirname + "/../actions/user/upload").route
         }
       ],
       "/:id": [
@@ -48,9 +63,9 @@ module.exports = {
       ]
     }
   },
-  "/language":{
-    resources:{
-      "/":[
+  "/language": {
+    resources: {
+      "/": [
         {
           method: "get",
           middlewares: [],

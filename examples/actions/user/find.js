@@ -5,13 +5,14 @@ const Webux = require("../../../index");
 const findUser = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      const users = await Webux.db.User.find().catch(e => {
-        return reject(Webux.errorHandler(422, e));
-      });
+      const users = await Webux.db.User.find()
+        .select(Webux.constants.user.select)
+        .catch(e => {
+          return reject(Webux.errorHandler(422, e));
+        });
       if (!users || users.length === 0) {
         return reject(Webux.errorHandler(404, "users not found"));
       }
-
 
       return resolve({
         msg: "Success !",
