@@ -20,6 +20,7 @@ const webuxLogger = require("webux-logger");
 const webuxErrorHandler = require("webux-errorhandler");
 const webuxLoader = require("webux-loader");
 const webuxFileUpload = require("webux-fileupload");
+const webuxAuth = require("webux-auth");
 const {
   LoadConfiguration,
   LoadConstants,
@@ -65,6 +66,7 @@ function Webux() {
   this.toObject = toObject;
   this.idToUrl = idToUrl;
   this.fileUpload = webuxFileUpload;
+  this.Auth = webuxAuth;
   this.$ = {}; // This object will hold custom variables, provided by the user.
 }
 
