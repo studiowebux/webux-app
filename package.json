@@ -15,7 +15,7 @@
   "license": "SEE LICENSE IN license.txt",
   "dependencies": {
     "express": "latest",
-    "joi": "latest",
+    "@hapi/joi": "latest",
     "webux-auth": "latest",
     "webux-errorhandler": "latest",
     "webux-fileupload": "latest",

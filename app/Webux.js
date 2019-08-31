@@ -54,6 +54,7 @@ function Webux() {
   this.db = null;
   this.validators = {};
   this.constants = {};
+  this.isAuth = null;
 
   this.log = webuxLogger();
   this.app = express();
