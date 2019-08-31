@@ -42,7 +42,11 @@ const {
   SendMail,
   ConfigureWebuxMailer,
   InitDB,
-  express
+  express,
+  CreateIsAuth,
+  InitJWTStrategy,
+  InitLocalStrategy,
+  InitRedis
 } = require("../lib");
 const toObject = require("../lib/toObject");
 const idToUrl = require("../lib/idToUrl");
@@ -91,5 +95,9 @@ Webux.prototype.LoadModels = LoadModels;
 Webux.prototype.LoadConstants = LoadConstants;
 Webux.prototype.LoadValidators = LoadValidators;
 Webux.prototype.LoadStaticResources = LoadStaticResources;
+Webux.prototype.CreateIsAuth = CreateIsAuth;
+Webux.prototype.InitJWTStrategy = InitJWTStrategy;
+Webux.prototype.InitLocalStrategy = InitLocalStrategy;
+Webux.prototype.InitRedis = InitRedis;
 
 module.exports = Webux;
