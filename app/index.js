@@ -1,7 +1,7 @@
-const Core = require('./Webux');
+const Core = require("./Webux");
 
 module.exports = WebuxCore;
 
-function WebuxCore(){
+function WebuxCore() {
   return new Core();
 }
