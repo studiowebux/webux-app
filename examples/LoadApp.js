@@ -17,63 +17,70 @@ let showConfiguration = function() {
 };
 
 async function LoadApp() {
-  // Load constants
-  await Webux.LoadConstants(path.join(__dirname, "constants"));
+  try {
+    // Load constants
+    await Webux.LoadConstants(path.join(__dirname, "constants"));
 
-  // Load validators
-  await Webux.LoadValidators(path.join(__dirname, "validations"));
+    // Load validators
+    await Webux.LoadValidators(path.join(__dirname, "validations"));
 
-  // Load configuration
-  await Webux.LoadConfiguration(path.join(__dirname, "config"));
+    // Load configuration
+    await Webux.LoadConfiguration(path.join(__dirname, "config"));
 
-  // Create logger
-  await Webux.CreateLogger();
+    // Create logger
+    await Webux.CreateLogger();
 
-  // initialize the Database
-  await Webux.InitDB();
+    // initialize the Database
+    await Webux.InitDB();
 
-  // initialize the Database Models
-  await Webux.LoadModels();
+    // initialize the Database Models
+    await Webux.LoadModels();
 
-  // load default values
-  await Webux.LoadSeed();
+    // load default values
+    await Webux.LoadSeed();
 
-  // request logger
-  await Webux.OnRequest();
+    // request logger
+    await Webux.OnRequest();
 
-  // Load security
-  await Webux.LoadSecurity();
+    // Load security
+    await Webux.LoadSecurity();
 
-  // Load Language
-  await Webux.LoadLanguage();
+    // Load Language
+    await Webux.LoadLanguage();
 
-  // Create Limiter
-  await Webux.CreateLimiter();
+    // Create Limiter
+    await Webux.CreateLimiter();
 
-  // Load static resources
-  await Webux.LoadStaticResources();
-  // routes
-  await Webux.CreateRoutes();
+    // Load static resources
+    await Webux.LoadStaticResources();
+    // routes
+    await Webux.CreateRoutes();
 
-  // sockets
-  await Webux.CreateSockets();
+    // sockets
+    await Webux.CreateSockets();
 
-  // error handling
-  await Webux.GlobalErrorHandler();
+    // error handling
+    await Webux.GlobalErrorHandler();
 
-  // start server
-  await Webux.StartServer();
+    // start server
+    await Webux.StartServer();
 
-  // start sockets
-  await Webux.StartSocket();
+    // start sockets
+    await Webux.StartSocket();
 
-  Webux.$["customVariableA"] = customVariableA;
-  Webux.$["customVariableB"] = customVariableB;
-  Webux.changeVariableB = changeVariableB;
-  Webux.showVariableB = showVariableB;
-  Webux.showConfiguration = showConfiguration;
+    Webux.$["customVariableA"] = customVariableA;
+    Webux.$["customVariableB"] = customVariableB;
+    Webux.changeVariableB = changeVariableB;
+    Webux.showVariableB = showVariableB;
+    Webux.showConfiguration = showConfiguration;
 
-  return Webux;
+
+    console.log("The end !")
+    return Webux;
+  } catch (e) {
+    console.error(e);
+    process.exit(1);
+  }
 }
 
 module.exports = LoadApp;
