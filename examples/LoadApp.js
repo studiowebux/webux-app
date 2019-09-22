@@ -1,85 +1,50 @@
+let Webux = require("../index");
 const path = require("path");
-let Webux = require("../index"); // this module the app
-
-const customVariableA = "A B C i'm a constant.";
-let customVariableB = "I can change over time.";
-
-let changeVariableB = function() {
-  this.$.customVariableB = "Something else";
-};
-
-let showVariableB = function() {
-  console.log(this.$.customVariableB);
-};
-
-let showConfiguration = function() {
-  console.log(this.config);
-};
 
 async function LoadApp() {
   try {
-    // Load constants
-    await Webux.LoadConstants(path.join(__dirname, "constants"));
+    Webux.LoadResponses();
 
-    // Load validators
-    await Webux.LoadValidators(path.join(__dirname, "validations"));
+    Webux.LoadConfiguration(path.join(__dirname, "config"));
 
-    // Load configuration
-    await Webux.LoadConfiguration(path.join(__dirname, "config"));
+    Webux.LoadConstants(path.join(__dirname, "constants"));
 
-    // Create logger
-    await Webux.CreateLogger();
+    Webux.LoadValidators(path.join(__dirname, "validations"));
 
-    // initialize the Database
+    await Webux.InitLogger();
+
     await Webux.InitDB();
 
-    // initialize the Database Models
     await Webux.LoadModels();
 
-    // load default values
     await Webux.LoadSeed();
 
-    // request logger
-    await Webux.OnRequest();
+    Webux.OnRequest();
 
-    // Load security
+    Webux.OnResponse();
+
     await Webux.LoadSecurity();
 
-    // Load Language
-    await Webux.LoadLanguage();
+    Webux.LoadLanguage();
 
-    // Create Limiter
-    await Webux.CreateLimiter();
+    await Webux.LoadLimiters();
 
-    // Load static resources
     await Webux.LoadStaticResources();
-    // routes
-    await Webux.CreateRoutes();
 
-    // sockets
-    await Webux.CreateSockets();
+    await Webux.LoadRoutes();
 
-    // error handling
-    await Webux.GlobalErrorHandler();
+    await Webux.LoadGlobalErrorHandler();
 
-    // start server
-    await Webux.StartServer();
+    await Webux.InitSocket();
 
-    // start sockets
-    await Webux.StartSocket();
+    await Webux.InitServer();
 
-    Webux.$["customVariableA"] = customVariableA;
-    Webux.$["customVariableB"] = customVariableB;
-    Webux.changeVariableB = changeVariableB;
-    Webux.showVariableB = showVariableB;
-    Webux.showConfiguration = showConfiguration;
+    Webux.OnSocket();
 
-
-    console.log("The end !")
-    return Webux;
+    console.log("Application Ready !");
   } catch (e) {
     console.error(e);
-    process.exit(1);
+    process.exit(2);
   }
 }
 

@@ -27,7 +27,7 @@
     "webux-mongo-db": "latest",
     "webux-query": "latest",
     "webux-response": "latest",
-    "webux-route": "latest",
+    "webux-route": "^1.1.11",
     "webux-security": "latest",
     "webux-seed": "latest",
     "webux-server": "latest",

@@ -14,43 +14,59 @@
 
 "use strict";
 
+// Externals
+const express = require("express");
+
+// Wrappers
 const webuxValidator = require("webux-validator");
 const webuxQuery = require("webux-query");
-const webuxLogger = require("webux-logger");
-const webuxErrorHandler = require("webux-errorhandler");
-const webuxLoader = require("webux-loader");
 const webuxFileUpload = require("webux-fileupload");
+const { errorHandler } = require("webux-errorhandler");
+const webuxLogger = require("webux-logger");
+const webuxLoader = require("webux-loader");
 const webuxAuth = require("webux-auth");
+const { InitWebuxMailer, SendMail } = require("../lib/mailer");
 const {
-  LoadConfiguration,
-  LoadConstants,
-  LoadGlobalErrorHandler,
-  LoadLanguage,
-  LoadModels,
-  LoadSecurity,
-  LoadSeed,
-  LoadValidators,
-  LoadStaticResources,
-  CreateLogger,
-  CreateLimiter,
-  CreateRoutes,
-  CreateSockets,
-  StartServer,
-  StartSocket,
-  OnRequest,
-  OnResponse,
-  SendMail,
-  ConfigureWebuxMailer,
-  InitDB,
-  express,
-  CreateIsAuth,
+  InitIsAuth,
+  InitRedis,
   InitJWTStrategy,
-  InitLocalStrategy,
-  InitRedis
-} = require("../lib");
+  InitLocalStrategy
+} = require("../lib/auth");
+
+// Utils
 const toObject = require("../lib/toObject");
 const idToUrl = require("../lib/idToUrl");
 
+// Prototypes
+const {
+  LoadConfiguration,
+  InitLogger,
+  OnRequest,
+  OnResponse,
+  LoadLanguage,
+  OnSocket
+} = require("../lib/require");
+
+const {
+  InitDB,
+  LoadModels,
+  LoadSeed,
+  LoadSecurity,
+  LoadStaticResources,
+  LoadRoutes,
+  InitSocket,
+  LoadGlobalErrorHandler,
+  InitServer
+} = require("../lib/promise");
+
+const LoadConstants = require("../lib/constants");
+const LoadValidators = require("../lib/validators");
+const LoadResponses = require("../lib/responses");
+const LoadLimiters = require("../lib/limiters");
+
+/**
+ * Webux Object
+ */
 function Webux() {
   this.config = {};
   this.socket = null;
@@ -64,8 +80,8 @@ function Webux() {
   this.app = express();
   this.express = express;
   this.router = express.Router();
-  this.errorHandler = webuxErrorHandler.errorHandler;
-  this.config = webuxLoader;
+  this.errorHandler = errorHandler;
+  this.webuxLoader = webuxLoader;
   this.query = webuxQuery;
   this.isValid = webuxValidator;
   this.toObject = toObject;
@@ -76,26 +92,29 @@ function Webux() {
 }
 
 Webux.prototype.LoadConfiguration = LoadConfiguration;
-Webux.prototype.LoadSecurity = LoadSecurity;
-Webux.prototype.LoadLanguage = LoadLanguage;
-Webux.prototype.CreateLogger = CreateLogger;
-Webux.prototype.LoadSeed = LoadSeed;
-Webux.prototype.StartServer = StartServer;
-Webux.prototype.OnRequest = OnRequest;
-Webux.prototype.OnResponse = OnResponse;
-Webux.prototype.CreateRoutes = CreateRoutes;
-Webux.prototype.CreateSockets = CreateSockets;
-Webux.prototype.StartSocket = StartSocket;
-Webux.prototype.GlobalErrorHandler = LoadGlobalErrorHandler;
-Webux.prototype.CreateLimiter = CreateLimiter;
-Webux.prototype.ConfigureWebuxMailer = ConfigureWebuxMailer;
-Webux.prototype.SendMail = SendMail;
-Webux.prototype.InitDB = InitDB;
-Webux.prototype.LoadModels = LoadModels;
 Webux.prototype.LoadConstants = LoadConstants;
 Webux.prototype.LoadValidators = LoadValidators;
+Webux.prototype.LoadResponses = LoadResponses;
+Webux.prototype.InitLogger = InitLogger;
+Webux.prototype.InitDB = InitDB;
+Webux.prototype.LoadModels = LoadModels;
+Webux.prototype.LoadSeed = LoadSeed;
+Webux.prototype.OnRequest = OnRequest;
+Webux.prototype.OnResponse = OnResponse;
+Webux.prototype.LoadSecurity = LoadSecurity;
+Webux.prototype.LoadLanguage = LoadLanguage;
+Webux.prototype.LoadLimiters = LoadLimiters;
 Webux.prototype.LoadStaticResources = LoadStaticResources;
-Webux.prototype.CreateIsAuth = CreateIsAuth;
+Webux.prototype.LoadRoutes = LoadRoutes;
+Webux.prototype.InitSocket = InitSocket;
+Webux.prototype.OnSocket = OnSocket;
+Webux.prototype.LoadGlobalErrorHandler = LoadGlobalErrorHandler;
+Webux.prototype.InitServer = InitServer;
+
+Webux.prototype.InitWebuxMailer = InitWebuxMailer;
+Webux.prototype.SendMail = SendMail;
+
+Webux.prototype.InitIsAuth = InitIsAuth;
 Webux.prototype.InitJWTStrategy = InitJWTStrategy;
 Webux.prototype.InitLocalStrategy = InitLocalStrategy;
 Webux.prototype.InitRedis = InitRedis;

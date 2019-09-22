@@ -9,7 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@hapi/joi": "^16.1.4"
+    "@hapi/joi": "^16.1.4",
+    "webux-route": "^1.1.10"
   },
   "devDependencies": {
     "mongo-in-memory": "0.0.5"

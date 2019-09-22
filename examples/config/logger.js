@@ -1,6 +1,7 @@
 module.exports = {
   application_id: "Test01",
   forceConsole: true,
+  consoleLevel: "info",
   logstash: {
     host: "127.0.0.1",
     port: "5000" // udp only !

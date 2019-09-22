@@ -3,6 +3,19 @@ const _user = require("../constants/user");
 const Webux = require("../../index");
 
 module.exports = {
+  "/": {
+    resources: {
+      "/healthcheck": [
+        {
+          method: "get",
+          middlewares: [], // By default, this route is publicly available, you should create a middleware to protect this resource.
+          action: (req, res, next) => {
+            return res.success({ msg: "Pong !" });
+          }
+        }
+      ]
+    }
+  },
   "/user": {
     resources: {
       "/": [
