@@ -11,7 +11,7 @@ async function LoadApp() {
 
     Webux.LoadValidators(path.join(__dirname, "validations"));
 
-    await Webux.InitLogger();
+    //await Webux.InitLogger();
 
     await Webux.InitDB();
 
