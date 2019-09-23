@@ -86,5 +86,143 @@ module.exports = {
         }
       ]
     }
-  }
+  },"/something": {
+    resources: {
+      "/": [
+        {
+          method: "get",
+          middlewares: [Query(_user.blacklist, _user.select)],
+          action: require(__dirname + "/../actions/user/find").route
+        },
+        {
+          method: "post",
+          middlewares: [],
+          action: require(__dirname + "/../actions/user/create").route
+        }
+      ],
+      "/:id/picture": [
+        {
+          method: "get",
+          middlewares: [],
+          action: require(__dirname + "/../actions/user/download").route
+        },
+        {
+          method: "post",
+          middlewares: [
+            Webux.fileUpload.fileUploadMiddleware(Webux.config.upload)
+          ],
+          action: require(__dirname + "/../actions/user/upload").route
+        }
+      ],
+      "/:id": [
+        {
+          method: "get",
+          middlewares: [],
+          action: require(__dirname + "/../actions/user/findOne").route
+        },
+        {
+          method: "put",
+          middlewares: [],
+          action: require(__dirname + "/../actions/user/update").route
+        },
+        {
+          method: "delete",
+          middlewares: [],
+          action: require(__dirname + "/../actions/user/remove").route
+        }
+      ]
+    }
+  },"/hum": {
+    resources: {
+      "/": [
+        {
+          method: "get",
+          middlewares: [Query(_user.blacklist, _user.select)],
+          action: require(__dirname + "/../actions/user/find").route
+        },
+        {
+          method: "post",
+          middlewares: [],
+          action: require(__dirname + "/../actions/user/create").route
+        }
+      ],
+      "/:id/picture": [
+        {
+          method: "get",
+          middlewares: [],
+          action: require(__dirname + "/../actions/user/download").route
+        },
+        {
+          method: "post",
+          middlewares: [
+            Webux.fileUpload.fileUploadMiddleware(Webux.config.upload)
+          ],
+          action: require(__dirname + "/../actions/user/upload").route
+        }
+      ],
+      "/:id": [
+        {
+          method: "get",
+          middlewares: [],
+          action: require(__dirname + "/../actions/user/findOne").route
+        },
+        {
+          method: "put",
+          middlewares: [],
+          action: require(__dirname + "/../actions/user/update").route
+        },
+        {
+          method: "delete",
+          middlewares: [],
+          action: require(__dirname + "/../actions/user/remove").route
+        }
+      ]
+    }
+  },"/another": {
+    resources: {
+      "/": [
+        {
+          method: "get",
+          middlewares: [Query(_user.blacklist, _user.select)],
+          action: require(__dirname + "/../actions/user/find").route
+        },
+        {
+          method: "post",
+          middlewares: [],
+          action: require(__dirname + "/../actions/user/create").route
+        }
+      ],
+      "/:id/picture": [
+        {
+          method: "get",
+          middlewares: [],
+          action: require(__dirname + "/../actions/user/download").route
+        },
+        {
+          method: "post",
+          middlewares: [
+            Webux.fileUpload.fileUploadMiddleware(Webux.config.upload)
+          ],
+          action: require(__dirname + "/../actions/user/upload").route
+        }
+      ],
+      "/:id": [
+        {
+          method: "get",
+          middlewares: [],
+          action: require(__dirname + "/../actions/user/findOne").route
+        },
+        {
+          method: "put",
+          middlewares: [],
+          action: require(__dirname + "/../actions/user/update").route
+        },
+        {
+          method: "delete",
+          middlewares: [],
+          action: require(__dirname + "/../actions/user/remove").route
+        }
+      ]
+    }
+  },
 };
