@@ -43,8 +43,7 @@ const {
   InitLogger,
   OnRequest,
   OnResponse,
-  LoadLanguage,
-  OnSocket
+  LoadLanguage
 } = require("../lib/require");
 
 const {
@@ -107,7 +106,6 @@ Webux.prototype.LoadLimiters = LoadLimiters;
 Webux.prototype.LoadStaticResources = LoadStaticResources;
 Webux.prototype.LoadRoutes = LoadRoutes;
 Webux.prototype.InitSocket = InitSocket;
-Webux.prototype.OnSocket = OnSocket;
 Webux.prototype.LoadGlobalErrorHandler = LoadGlobalErrorHandler;
 Webux.prototype.InitServer = InitServer;
 

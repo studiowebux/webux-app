@@ -35,11 +35,10 @@ async function LoadApp() {
 
     await Webux.LoadGlobalErrorHandler();
 
-    await Webux.InitSocket();
-
     await Webux.InitServer();
 
-    Webux.OnSocket();
+    // To start the socket listener, you need the server (http/https) instance
+    await Webux.InitSocket();
 
     console.log("Application Ready !");
   } catch (e) {
