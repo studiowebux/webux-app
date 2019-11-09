@@ -1,6 +1,6 @@
 {
   "name": "@studiowebux/app",
-  "version": "3.4.17",
+  "version": "3.4.18",
   "description": "This is the webux core, all the definitions will be available here",
   "main": "index.js",
   "homepage": "https://github.com/studiowebux/webux-app",
