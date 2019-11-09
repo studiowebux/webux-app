@@ -1,4 +1,4 @@
-const Query = require("webux-query");
+const Query = require("@studiowebux/query");
 const _user = require("../constants/user");
 const Webux = require("../../index");
 

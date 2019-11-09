@@ -1,101 +1,181 @@
-# Webux-app
-This module contains the definition of the whole app, it uses global variable to simplify the app structure.
+# @studiowebux/app
+
+This module is a wrapper to use the webux toolbox.
 
 # Installation
+
 ```
-npm i --save webux-app
+npm i --save @studiowebux/app
 ```
 
 # Usage
 
-@ 2019-07-13 I will soon start to write a complete documentation, I recommend you to check the example directory to get a good understanding of the application  
+it can be use to centralise the rest API developmen.
+Every modules in the @studiowebux scope are compatible and tested with this module.
 
-This module is a wrapper of the entire app, you can use it to centralise the management, all the modules work together without major issues.
+## How to use it ?
 
-For an example about how to use it, check the examples directory.
+The Examples/ directory contains a working demo.
 
-Otherwise here is the two files that use especially the webux-app module,
+## Packages
 
-LoadApp.js
-it contains the application definition.
-```
+express
+@hapi/joi
+@studiowebux/auth
+@studiowebux/errorhandler
+@studiowebux/fileupload
+@studiowebux/language
+@studiowebux/limiter
+@studiowebux/loader
+@studiowebux/logger
+@studiowebux/logging
+@studiowebux/mailer
+@studiowebux/mongo-db
+@studiowebux/query
+@studiowebux/response
+@studiowebux/route
+@studiowebux/security
+@studiowebux/seed
+@studiowebux/server
+@studiowebux/socket
+@studiowebux/static
+@studiowebux/validator
+
+## Specifications
+
+### LoadApp.js
+
+It contains the application definition, the modules, variables and custom fucntions can be added in this file.  
+This example is a complete example,
+
+```javascript
+// █████╗ ██████╗ ██████╗
+// ██╔══██╗██╔══██╗██╔══██╗
+// ███████║██████╔╝██████╔╝
+// ██╔══██║██╔═══╝ ██╔═══╝
+// ██║  ██║██║     ██║
+// ╚═╝  ╚═╝╚═╝     ╚═╝
+
+/**
+ * File: index.js
+ * Author:
+ * Date:
+ * License:
+ */
+
+"use strict";
+
 const path = require("path");
-const Webux = require("webux-app");
+const Webux = require("@studiowebux/app");
+const { loginFn, registerFn } = require("../api/v1/plugins/auth/local");
+// const { deserializeFn } = require("../api/v1/plugins/auth/local"); // if required
+const jwtOptions = require(path.join(__dirname, "..", "config", "auth")).jwt;
+
+/**
+ * It initializes the application.
+ * @returns {Function} The webux object
+ */
 
 async function LoadApp() {
-  // Load configuration
-  await Webux.LoadConfiguration(path.join(__dirname, "config"));
+  Webux.LoadResponses();
 
-  // Create logger
-  await Webux.CreateLogger();
+  // load isAuth middleware
+  await Webux.InitIsAuth(jwtOptions);
 
-  // initialize the Database
+  Webux.LoadConstants(path.join(__dirname, "..", "api", "v1", "constants"));
+
+  Webux.LoadValidators(path.join(__dirname, "..", "api", "v1", "validations"));
+
+  Webux.LoadConfiguration(path.join(__dirname, "..", "config"));
+
+  await Webux.InitLogger();
+
   await Webux.InitDB();
 
-  // initialize the Database Models
   await Webux.LoadModels();
 
-  // load default values
-  await Webux.LoadSeed();
+  if (Webux.config.seed.enabled) {
+    await Webux.LoadSeed();
+  }
 
-  // request logger
-  await Webux.OnRequest();
+  Webux.OnRequest();
 
-  // Load security
+  Webux.OnResponse();
+
   await Webux.LoadSecurity();
 
-  // Load Language
-  await Webux.LoadLanguage();
+  Webux.LoadLanguage();
 
-  // Create Limiter
-  await Webux.CreateLimiter();
+  await Webux.LoadLimiters();
 
-  // routes
-  await Webux.CreateRoutes();
+  await Webux.LoadStaticResources();
 
-  // sockets
-  await Webux.CreateSockets();
+  await Webux.LoadRoutes();
 
-  // error handling
-  await Webux.GlobalErrorHandler();
+  await Webux.LoadGlobalErrorHandler();
 
-  // start server
-  await Webux.StartServer();
+  await Webux.InitServer();
 
-  // start sockets
-  await Webux.StartSocket();
+  await Webux.InitSocket();
 
-  return Webux;
+  // Initialize the authentication module
+  await Webux.InitLocalStrategy(loginFn, registerFn);
+  await Webux.InitJWTStrategy(/*deserializeFn*/);
+  await Webux.InitRedis();
+
+  Webux.Auth.checkAuth = require("../api/v1/plugins/auth/isAuth");
+  Webux.setIp = require("../api/v1/helpers/setIp");
+
+  Webux.log.info("Application Ready !");
 }
 
 module.exports = LoadApp;
 ```
 
-app.js
-This is the entry point for the application
-```
-const LoadApp = require("./LoadApp");
+### app.js
+This is the entry point of the application
+
+```javascript
+"use strict";
+
+const LoadApp = require("./app");
 
 try {
   LoadApp();
 } catch (e) {
+  console.error(e);
   process.exit(1);
 }
-```
 
-The application recommended architecture
+```
+## Architecture
+
 ```
 ./
-  actions/
-    user/
-      create.js
-      find.js
-      findOne.js
-      update.js
-      remove.js
-    language/
-      find.js
+  api/
+    v1/
+      actions/
+        user/
+          create.js
+          find.js
+          findOne.js
+          update.js
+          remove.js
+        language/
+          find.js
+      constants/
+        user.js
+      validations/
+        user.js
+      helpers/
+        custom.js
+      middlewares/
+        func.js
+      plugins/
+        auth/
+          func.js
   config/
+    auth.js
     db.js
     language.js
     limiter.js
@@ -107,8 +187,8 @@ The application recommended architecture
     seed.js
     server.js
     socket.js
-  constants/
-    user.js
+    static.js
+    upload.js
   defaults/
     00_language.js
   locales/
@@ -117,16 +197,17 @@ The application recommended architecture
   models/
     user.js
     language.js
-  validations/
-    user.js
-  app.js
-  LoadApp.js
+  app/
+    index.js
+  log/
+    info.log
+  tests/
+    cases/
+  Dockerfile
+  index.js
   package.json
   .gitignore
 ```
-
-for further details, i'm currently writing the whole document for the framework...
-Feel free to ask questions,
 
 ## Contributing
 

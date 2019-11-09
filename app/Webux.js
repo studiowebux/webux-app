@@ -18,13 +18,13 @@
 const express = require("express");
 
 // Wrappers
-const webuxValidator = require("webux-validator");
-const webuxQuery = require("webux-query");
-const webuxFileUpload = require("webux-fileupload");
-const { errorHandler } = require("webux-errorhandler");
-const webuxLogger = require("webux-logger");
-const webuxLoader = require("webux-loader");
-const webuxAuth = require("webux-auth");
+const webuxValidator = require("@studiowebux/validator");
+const webuxQuery = require("@studiowebux/query");
+const webuxFileUpload = require("@studiowebux/fileupload");
+const { errorHandler } = require("@studiowebux/errorhandler");
+const webuxLogger = require("@studiowebux/logger");
+const webuxLoader = require("@studiowebux/loader");
+const webuxAuth = require("@studiowebux/auth");
 const { InitWebuxMailer, SendMail } = require("../lib/mailer");
 const {
   InitIsAuth,
@@ -38,6 +38,7 @@ const toObject = require("../lib/toObject");
 const idToUrl = require("../lib/idToUrl");
 
 // Prototypes
+/// require
 const {
   LoadConfiguration,
   InitLogger,
@@ -46,6 +47,7 @@ const {
   LoadLanguage
 } = require("../lib/require");
 
+/// Promise
 const {
   InitDB,
   LoadModels,

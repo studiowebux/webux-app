@@ -1,12 +1,12 @@
 {
-  "name": "webux-app",
+  "name": "@studiowebux/app",
   "version": "3.4.17",
   "description": "This is the webux core, all the definitions will be available here",
   "main": "index.js",
   "homepage": "https://github.com/studiowebux/webux-app",
   "repository": {
     "type": "git",
-    "url": "https://github.com/studiowebux/webux-app.git"
+    "url": "git+https://github.com/studiowebux/webux-app.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,28 +15,43 @@
   "license": "SEE LICENSE IN license.txt",
   "dependencies": {
     "express": "latest",
-    "webux-auth": "latest",
-    "webux-errorhandler": "latest",
-    "webux-fileupload": "latest",
-    "webux-language": "latest",
-    "webux-limiter": "latest",
-    "webux-loader": "latest",
-    "webux-logger": "latest",
-    "webux-logging": "latest",
-    "webux-mailer": "latest",
-    "webux-mongo-db": "latest",
-    "webux-query": "latest",
-    "webux-response": "latest",
-    "webux-route": "latest",
-    "webux-security": "latest",
-    "webux-seed": "latest",
-    "webux-server": "latest",
-    "webux-socket": "latest",
-    "webux-static": "latest",
-    "webux-validator": "latest"
+    "@studiowebux/auth": "latest",
+    "@studiowebux/errorhandler": "latest",
+    "@studiowebux/fileupload": "latest",
+    "@studiowebux/language": "latest",
+    "@studiowebux/limiter": "latest",
+    "@studiowebux/loader": "latest",
+    "@studiowebux/logger": "latest",
+    "@studiowebux/logging": "latest",
+    "@studiowebux/mailer": "latest",
+    "@studiowebux/mongo-db": "latest",
+    "@studiowebux/query": "latest",
+    "@studiowebux/response": "latest",
+    "@studiowebux/route": "latest",
+    "@studiowebux/security": "latest",
+    "@studiowebux/seed": "latest",
+    "@studiowebux/server": "latest",
+    "@studiowebux/socket": "latest",
+    "@studiowebux/static": "latest",
+    "@studiowebux/validator": "latest"
   },
   "devDependencies": {
     "@hapi/joi": "^16.1.4",
     "mongo-in-memory": "0.0.5"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/studiowebux/webux-app/issues"
+  },
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  },
+  "keywords": [
+    "NodeJS",
+    "application",
+    "express",
+    "toolbox",
+    "API",
+    "Backend"
+  ]
 }
