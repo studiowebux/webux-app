@@ -1,7 +1,7 @@
 {
   "name": "@studiowebux/app",
   "version": "3.4.18",
-  "description": "This is the webux core, all the definitions will be available here",
+  "description": "This module can be use as the core of the application, it offers directly some tools.",
   "main": "index.js",
   "homepage": "https://github.com/studiowebux/webux-app",
   "repository": {
@@ -14,37 +14,18 @@
   "author": "Studio Webux S.E.N.C",
   "license": "SEE LICENSE IN license.txt",
   "dependencies": {
-    "express": "latest",
-    "@studiowebux/auth": "latest",
-    "@studiowebux/errorhandler": "latest",
-    "@studiowebux/fileupload": "latest",
-    "@studiowebux/language": "latest",
-    "@studiowebux/limiter": "latest",
-    "@studiowebux/loader": "latest",
-    "@studiowebux/logger": "latest",
-    "@studiowebux/logging": "latest",
-    "@studiowebux/mailer": "latest",
-    "@studiowebux/mongo-db": "latest",
-    "@studiowebux/query": "latest",
-    "@studiowebux/response": "latest",
-    "@studiowebux/route": "latest",
-    "@studiowebux/security": "latest",
-    "@studiowebux/seed": "latest",
-    "@studiowebux/server": "latest",
-    "@studiowebux/socket": "latest",
-    "@studiowebux/static": "latest",
-    "@studiowebux/validator": "latest"
+    "i18n": "^0.9.1",
+    "uuid": "^8.0.0"
   },
   "devDependencies": {
-    "@hapi/joi": "^16.1.4",
-    "mongo-in-memory": "0.0.5"
+    "@hapi/joi": "^17.1.1",
+    "express": "^4.17.1"
   },
   "bugs": {
     "url": "https://github.com/studiowebux/webux-app/issues"
   },
   "directories": {
-    "example": "examples",
-    "lib": "lib"
+    "example": "examples"
   },
   "keywords": [
     "NodeJS",

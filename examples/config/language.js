@@ -1,7 +1,9 @@
+const path = require("path");
+
 module.exports = {
   availables: ["fr", "en"],
-  directory: "locales",
+  directory: path.join(__dirname, "..", "locales"),
   default: "en",
   autoReload: true,
-  syncFiles: true
+  syncFiles: true,
 };
