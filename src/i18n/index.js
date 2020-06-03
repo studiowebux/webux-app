@@ -17,6 +17,7 @@ const path = require("path");
  * @returns {Function} The express middleware
  */
 const onRequest = (availableLanguage, i18n, log = console) => {
+  log.debug("Webux-app - Attach i18n");
   return (req, res, next) => {
     const lang =
       req.headers && req.headers["accept-language"]
@@ -41,7 +42,8 @@ const onRequest = (availableLanguage, i18n, log = console) => {
  * @param {Object} log The log function, optional
  * @returns {Object} returns the i18n object
  */
-const configure = (options, log = console) => {
+const configure = (options = {}, log = console) => {
+  log.debug("Webux-app - Configure i18n");
   let i18n = require("i18n");
 
   i18n.configure({
