@@ -54,11 +54,10 @@ class App {
    * It loads the functions and variables from a file to create a single object
    * It creates an object based on all files within the driectory
    * @param {String} modulePath A path
-   * @param {String} key the key to hold all the values
    * @returns {Object} The application configuration
    */
-  LoadModule(modulePath, key) {
-    this[key] = loadConfiguration(modulePath, this.log);
+  LoadModule(modulePath) {
+    return loadConfiguration(modulePath, this.log);
   }
 
   /**

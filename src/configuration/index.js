@@ -30,8 +30,6 @@ function splitName(moduleName) {
 /**
  * Load all modules within a directory and return the object containing the key/value
  * @param {String} configPath The absolute directory path, mandatory
- * @param {Object} modules The Configuration Array to store the module config., optional
- * (if the configuration is already initialized from external sources)
  * @param {Function} log The log function, optional (Default: console)
  * @return {Array} The mapping of the config name and the key/values.
  */

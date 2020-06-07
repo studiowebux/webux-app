@@ -83,33 +83,35 @@ webuxApp.config._manual = {
 
 The `LoadConfiguration` function append the configurations.
 
-#### LoadModule(modulePath, key): Object
+#### LoadModule(modulePath): Object
 
-This function add exported variables from a file in a centralized variable.
+This function adds exported variables from a file in a centralized variable.
 
-For example, to load all **helpers** functions in this variable `webuxApp.helpers.*`
+For example, to load all **helpers** functions in this variable `helpers.*`
 
 Proceed as follow,
 
 ```javascript
-webuxApp.LoadModule(
-  path.join(__dirname, "api", "v1", "constants"),
-  "constants"
-);
-webuxApp.LoadModule(
-  path.join(__dirname, "api", "v1", "validations"),
-  "validations"
-);
-webuxApp.LoadModule(path.join(__dirname, "api", "v1", "helpers"), "helpers");
-webuxApp.LoadModule(
-  path.join(__dirname, "api", "v1", "middlewares"),
-  "middlewares"
+const constants = webuxApp.LoadModule(
+  path.join(__dirname, "api", "v1", "constants")
 );
 
-console.log(webuxApp.constants);
-console.log(webuxApp.helpers);
-console.log(webuxApp.middlewares);
-console.log(webuxApp.validations);
+const validations = webuxApp.LoadModule(
+  path.join(__dirname, "api", "v1", "validations")
+);
+
+const helpers = webuxApp.LoadModule(
+  path.join(__dirname, "api", "v1", "helpers")
+);
+
+const middlewares = webuxApp.LoadModule(
+  path.join(__dirname, "api", "v1", "middlewares")
+);
+
+console.log(constants);
+console.log(helpers);
+console.log(middlewares);
+console.log(validations);
 ```
 
 The files must have a specific structure:
@@ -129,13 +131,12 @@ module.exports = {
 };
 ```
 
-The variable and function are accessible doing :
+Variables and functions are accessible doing :
 
-- `webuxApp.helpers.user.users`
-- `webuxApp.helpers.user.GetUsers()`
+- `helpers.user.users`
+- `helpers.user.GetUsers()`
 
-The `modulePath` is mandatory, This value is the absolute path of the directory that has all the modules to import.
-The `key` parameter is mandatory, This value is the name of the key that will store all the modules.
+The `modulePath` is mandatory, This value is the absolute path of the directory that has all modules to import.
 
 #### IdToURL(id, resource, endpoint): String
 
