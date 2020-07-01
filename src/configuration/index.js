@@ -37,22 +37,28 @@ module.exports = (configPath, log = console) => {
   if (configPath && typeof configPath === "string") {
     let modules = {};
     // Get all files in the directory, process only the .js files
-    fs.readdirSync(configPath)
-      .sort()
-      .forEach((file) => {
-        if (file.includes(".js")) {
-          // link the configuration values with the filename.
-          const configName = file.split(".js")[0];
-          const _splitName = splitName(configName);
+    try {
+      fs.readdirSync(configPath)
+        .sort()
+        .forEach((file) => {
+          if (file.includes(".js")) {
+            // link the configuration values with the filename.
+            const configName = file.split(".js")[0];
+            const _splitName = splitName(configName);
 
-          modules[_splitName] = require(path.join(configPath, file));
-          log.info(
-            `\x1b[32mwebux-loader - Configuration : ${_splitName} loaded\x1b[0m`
-          );
-        }
-      });
-    // return the mapping config/name
-    return modules;
+            modules[_splitName] = require(path.join(configPath, file));
+            log.info(
+              `\x1b[32mwebux-loader - Configuration : ${_splitName} loaded\x1b[0m`
+            );
+          }
+        });
+      // return the mapping config/name
+      return modules;
+    } catch (e) {
+      // It can happen when the directory doesn't exist
+      log.error(e);
+      return [];
+    }
   } else {
     throw new Error(
       "The configPath must be a string representing the absolute path of the configuration directory."

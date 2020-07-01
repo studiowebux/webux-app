@@ -61,7 +61,7 @@ Pour charger les configurations en utilisant le répertoire utilisé lors de l'i
 
 ```javascript
 const WebuxApp = require("../src/index");
-const path = require("chemin");
+const path = require("path");
 const options = {
   configuration: path.join(__dirname, "config"),
 };
@@ -190,7 +190,7 @@ Il est nécessaire de passer une configuration,
 > Pour toutes les options disponibles, voir la documentation officielle du module.
 
 ```javascript
-const path = require("chemin");
+const path = require("path");
 const language = {
   availables: ["fr", "en"],
   directory: path.join(__dirname, "..", "locales"),
@@ -220,7 +220,7 @@ Avec les configurations chargées automatiquement,
 config/language.js
 
 ```javascript
-const path = require("chemin");
+const path = require("path");
 module.exports = {
   availables: ["fr", "en"],
   directory: path.join(__dirname, "..", "locales"),
@@ -233,7 +233,7 @@ module.exports = {
 index.js
 
 ```javascript
-const path = require("chemin");
+const path = require("path");
 const WebuxApp = require("@studiowebux/app");
 const webuxApp = new WebuxApp({
   configuration: path.join(__dirname, "config"),
@@ -253,7 +253,7 @@ Usage:
 
 ```javascript
 const express = require("express");
-const path = require("chemin");
+const path = require("path");
 const app = express();
 const WebuxApp = require("@studiowebux/app);
 
@@ -351,7 +351,7 @@ Par exemple,
 
 ```javascript
 const express = require("express");
-const path = require("chemin");
+const path = require("path");
 const app = express();
 const WebuxApp = require("@studiowebux/app");
 
@@ -391,7 +391,7 @@ Par exemple,
 
 ```javascript
 const express = require("express");
-const path = require("chemin");
+const path = require("path");
 const app = express();
 const WebuxApp = require("@studiowebux/app");
 
@@ -459,7 +459,7 @@ l'application:
 app.js
 
 ```javascript
-const path = require("chemin");
+const path = require("path");
 
 const WebuxApp = require("../../src/index");
 const app = require("express")();
