@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 /**
  * File: index.js
  * Author: Tommy Gingras
@@ -5,9 +6,7 @@
  * License: All rights reserved Studio Webux S.E.N.C 2015-Present
  */
 
-"use strict";
-
-const path = require("path");
+const path = require('path');
 
 /**
  *
@@ -17,18 +16,17 @@ const path = require("path");
  * @returns {Function} The express middleware
  */
 const onRequest = (availableLanguage, i18n, log = console) => {
-  log.debug("Webux-app - Attach i18n");
+  log.debug('Webux-app - Attach i18n');
   return (req, res, next) => {
-    const lang =
-      req.headers && req.headers["accept-language"]
-        ? req.headers["accept-language"]
-        : "en";
+    const lang = req.headers && req.headers['accept-language']
+      ? req.headers['accept-language']
+      : 'en';
     // used to track which language should be added in the app.
     if (
-      req.headers["accept-language"] &&
-      !availableLanguage.includes(req.headers["accept-language"])
+      req.headers['accept-language']
+      && !availableLanguage.includes(req.headers['accept-language'])
     ) {
-      log.warn("Language not available, " + req.headers["accept-language"]);
+      log.warn(`Language not available, ${req.headers['accept-language']}`);
     }
     i18n.setLocale(lang);
 
@@ -43,8 +41,8 @@ const onRequest = (availableLanguage, i18n, log = console) => {
  * @returns {Object} returns the i18n object
  */
 const configure = (options = {}, log = console) => {
-  log.debug("Webux-app - Configure i18n");
-  let i18n = require("i18n");
+  log.debug('Webux-app - Configure i18n');
+  const i18n = require('i18n');
 
   i18n.configure({
     locales: options.availables,

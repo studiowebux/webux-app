@@ -1,3 +1,5 @@
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
 /**
  * File: index.js
  * Author: Tommy Gingras
@@ -5,10 +7,8 @@
  * License: All rights reserved Studio Webux S.E.N.C 2015-Present
  */
 
-"use strict";
-
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
 /**
  * To create the key name without the XX_ naming convention.
@@ -16,7 +16,7 @@ const path = require("path");
  * @return {String} name filtered
  */
 function splitName(moduleName) {
-  const name = moduleName.split("_");
+  const name = moduleName.split('_');
 
   // Check if the part before the underscore has more than two characters
   // If so, returns only the second part
@@ -34,21 +34,21 @@ function splitName(moduleName) {
  * @return {Array} The mapping of the config name and the key/values.
  */
 module.exports = (configPath, log = console) => {
-  if (configPath && typeof configPath === "string") {
-    let modules = {};
+  if (configPath && typeof configPath === 'string') {
+    const modules = {};
     // Get all files in the directory, process only the .js files
     try {
       fs.readdirSync(configPath)
         .sort()
         .forEach((file) => {
-          if (file.includes(".js")) {
+          if (file.includes('.js')) {
             // link the configuration values with the filename.
-            const configName = file.split(".js")[0];
-            const _splitName = splitName(configName);
+            const configName = file.split('.js')[0];
+            const processedNamde = splitName(configName);
 
-            modules[_splitName] = require(path.join(configPath, file));
+            modules[processedNamde] = require(path.join(configPath, file));
             log.info(
-              `\x1b[32mwebux-loader - Configuration : ${_splitName} loaded\x1b[0m`
+              `\x1b[32mwebux-loader - Configuration : ${processedNamde} loaded\x1b[0m`,
             );
           }
         });
@@ -57,11 +57,11 @@ module.exports = (configPath, log = console) => {
     } catch (e) {
       // It can happen when the directory doesn't exist
       log.error(e);
-      return [];
+      return {};
     }
   } else {
     throw new Error(
-      "The configPath must be a string representing the absolute path of the configuration directory."
+      'The configPath must be a string representing the absolute path of the configuration directory.',
     );
   }
 };

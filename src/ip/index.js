@@ -5,8 +5,6 @@
  * License: All rights reserved Studio Webux S.E.N.C 2015-Present
  */
 
-"use strict";
-
 /**
  * Get the IP of the client in the req variable.
  * @param {Object} req The request variable, Mandatory
@@ -14,12 +12,12 @@
  */
 module.exports = (req) => {
   if (!req) {
-    throw new Error("req parameter is required.");
+    throw new Error('req parameter is required.');
   }
   return (
-    req.headers["x-forwarded-for"] ||
-    req.connection.remoteAddress ||
-    req.socket.remoteAddress ||
-    (req.connection.socket ? req.connection.socket.remoteAddress : null)
+    req.headers['x-forwarded-for']
+    || req.connection.remoteAddress
+    || req.socket.remoteAddress
+    || (req.connection.socket ? req.connection.socket.remoteAddress : null)
   );
 };

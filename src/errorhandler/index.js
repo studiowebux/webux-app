@@ -5,11 +5,9 @@
  * License: All rights reserved Studio Webux S.E.N.C 2015-Present
  */
 
-"use strict";
-
-const { v1 } = require("uuid");
-const crypto = require("crypto");
-const GetIP = require("../ip/index");
+const { v1 } = require('uuid');
+const crypto = require('crypto');
+const GetIP = require('../ip/index');
 
 /**
  * It formats the response to send it back to the client.
@@ -23,9 +21,8 @@ function response(res, code, error = {}) {
   // If the response is overwritten by the router (webux-route)
   if (res.custom) {
     return res.custom(code, error);
-  } else {
-    return res.status(code).json(error);
   }
+  return res.status(code).json(error);
 }
 
 /**
@@ -36,12 +33,13 @@ function response(res, code, error = {}) {
  * @returns {Function} Returns the middleware to catch the not found
  */
 const NotFoundHandler = (i18n = null, log = console) => {
-  log.debug("Webux-errorhandler - Creating the Resource Not Found Handler");
+  log.debug('Webux-errorhandler - Creating the Resource Not Found Handler');
   // catch 404 and forward to error handler
   // if no router get the request we hit this one.
   return (req, res, next) => {
-    let msg = i18n ? i18n.__("ROUTE_NOT_FOUND") : "Route not found";
-    log.error("Route Not Found, Please Refer To Documentation.");
+    // eslint-disable-next-line no-underscore-dangle
+    const msg = i18n ? i18n.__('ROUTE_NOT_FOUND') : 'Route not found';
+    log.error('Route Not Found, Please Refer To Documentation.');
     const err = new Error(msg);
     err.code = 404;
     err.message = msg;
@@ -59,12 +57,12 @@ const NotFoundHandler = (i18n = null, log = console) => {
  * @return {Function} Returns the middleware to intercept the error. (app.use())
  */
 const GlobalHandler = (log = console) => {
-  log.debug("Webux-errorhandler - Creating the Global Error Handler");
+  log.debug('Webux-errorhandler - Creating the Global Error Handler');
 
-  return (err, req, res, next) => {
+  return (err, req, res) => {
     const error = {
-      message: err.message || "",
-      devMessage: err.devMessage || "",
+      message: err.message || '',
+      devMessage: err.devMessage || '',
       extra: {
         user: err.extra || {},
         req: {
@@ -78,9 +76,9 @@ const GlobalHandler = (log = console) => {
 
     // It allows to sort the recurence easily in the logging system
     error.hash = crypto
-      .createHmac("sha256", "logging")
+      .createHmac('sha256', 'logging')
       .update(JSON.stringify(error))
-      .digest("hex");
+      .digest('hex');
 
     // It timestamps the entry and allows the user to contact us with the code,
     // that way we can check quickly the issue.
@@ -89,17 +87,16 @@ const GlobalHandler = (log = console) => {
     // Send the error to the logger
     log.error(error);
 
-    if (process.env.NODE_ENV != "production") {
+    if (process.env.NODE_ENV !== 'production') {
       // In development, we want to see everything
       return response(res, err.code || 500, error);
-    } else {
-      // In production, we want to limit the information sent to clients
-      return response(res, err.code || 500, {
-        message: err.message,
-        success: false,
-        refCode: refCode,
-      });
     }
+    // In production, we want to limit the information sent to clients
+    return response(res, err.code || 500, {
+      message: err.message,
+      success: false,
+      refCode: error.refCode,
+    });
   };
 };
 
@@ -114,12 +111,12 @@ const GlobalHandler = (log = console) => {
  * @returns {Error} returns an error object
  */
 const Handler = (code, msg, extra, devMsg) => {
-  let error = new Error();
+  const error = new Error();
 
   error.code = code || 500;
-  error.message = msg || "";
+  error.message = msg || '';
   error.extra = extra || {};
-  error.devMessage = devMsg || "";
+  error.devMessage = devMsg || '';
 
   return error;
 };

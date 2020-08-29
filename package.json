@@ -9,17 +9,29 @@
     "url": "git+https://github.com/studiowebux/webux-app.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "lint": "eslint src/**",
+    "doc": "jsdoc src -d jsdoc/ "
   },
   "author": "Studio Webux S.E.N.C",
   "license": "SEE LICENSE IN license.txt",
   "dependencies": {
     "i18n": "^0.9.1",
-    "uuid": "^8.0.0"
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
     "@hapi/joi": "^17.1.1",
-    "express": "^4.17.1"
+    "babel-jest": "^26.3.0",
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^23.20.0",
+    "express": "^4.17.1",
+    "jest": "^26.4.2",
+    "jsdoc": "^3.6.5",
+    "supertest": "^4.0.2"
   },
   "bugs": {
     "url": "https://github.com/studiowebux/webux-app/issues"

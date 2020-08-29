@@ -5,9 +5,7 @@
  * License: All rights reserved Studio Webux S.E.N.C 2015-Present
  */
 
-"use strict";
-
-const Core = require("./App");
+const Core = require('./App');
 /**
  * Exports the ore as new Object
  * It allows to use the import across multiple modules
